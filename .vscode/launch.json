@@ -8,7 +8,7 @@
           "name": "DEBUG_CELL_CLANG",
           "type": "cppdbg",
           "request": "launch",
-          "program": "${workspaceRoot}/pkmn_hd.debug",
+          "program": "${workspaceRoot}/RAMgoblins.debug",
           "args": ["-wizard", "-metrics"],
           "stopAtEntry": false,
           "cwd": "${workspaceFolder}",
