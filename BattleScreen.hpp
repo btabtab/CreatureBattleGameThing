@@ -11,10 +11,14 @@
 
 #include "ResourceCollector.hpp"
 
+#include "BattleTextBox.hpp"
+
 class BattleScreen : public RenderObject2D
 {
 private:
+	//Do not delete internally, not owned by this.
 	Team* player;
+	//Do not delete internally, not owned by this.
 	Team* enemy;
 
 	Sprite* background;
@@ -22,6 +26,9 @@ private:
 
 	BattleInfoBox* player_info;
 	BattleInfoBox* enemy_info;
+
+	BattleTextBox* btb;
+
 public:
 	BattleScreen(
 					Team* player,
@@ -34,6 +41,12 @@ public:
 	player_info(new BattleInfoBox(player->getCreature(0), Point<int>(GetScreenWidth() - 350, GetScreenHeight() - 300))),
 	enemy_info(new BattleInfoBox(enemy->getCreature(0), Point<int>(0, 0)))
 	{
+		//The box that will display text to the player.
+		btb = new BattleTextBox(Point<int>(0, GetScreenHeight() - 300));
+		btb->startChoosing();
+		btb->setVisibility(false);
+		engine->addRenderObject(btb);
+
 		background = new Sprite((int)texture_id);
 		info_boxes[0] = new Sprite(
 								(int)ResourceCollector::BATTLE_UI_INFO_BOX,
@@ -65,6 +78,8 @@ public:
 		{
 			engine->addRenderObject(player->getCreature(0)->getSprites().front());
 		}
+
+		engine->lockAllInputs();
 	}
 	~BattleScreen()
 	{
@@ -73,6 +88,7 @@ public:
 		info_boxes[1]->deleteMe();
 		player_info->deleteMe();
 		enemy_info->deleteMe();
+		btb->deleteMe();
 	}
 	void draw() override
 	{

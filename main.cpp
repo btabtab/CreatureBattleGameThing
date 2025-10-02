@@ -8,37 +8,24 @@
 #include "BattleScreen.hpp"
 
 #include "FancyButton.hpp"
-
+#include "MouseCursor.hpp"
+#include "CaptureStyler.hpp"
 void TwilightEngine::userSetup()
 {
-	// collectResources(this);
+	collectResources(this);
 	// Team player;
 	// Team enemy;
 	// addRenderObject(new BattleScreen(&player, &enemy, this));
+
+	HideCursor();
+	addRenderObject(new GameCursor());
+	addRenderObject(new CaptureStyler());
 }
+
+PuzzleButtonScoreTracker tracker;
 
 void TwilightEngine::userLoop()
 {
-	if(IsKeyPressed(KEY_A))
-	{
-		Point<float> randomised_position(
-										(GetScreenWidth() / 2) + GetRandomValue(-100, 100),
-										(GetScreenHeight() / 2) + GetRandomValue(-100, 100)
-									);
-		addRenderObject(new TimedButton(30 * 3, 30, randomised_position));
-	}
-	if(IsKeyPressed(KEY_S))
-	{
-		Point<float> randomised_a(
-								(GetScreenWidth() / 2) + GetRandomValue(-100, 100),
-								(GetScreenHeight() / 2) + GetRandomValue(-100, 100)
-								);
-		Point<float> randomised_b(
-								(GetScreenWidth() / 2) + (GetRandomValue(-100, 100)),
-								(GetScreenHeight() / 2) + (GetRandomValue(-100, 100))
-								);
-		addRenderObject(new PathwayButton(randomised_a, randomised_b, GetRandomValue(60, 120)));
-	}
 }
 
 int main(int argc, char* argv[])
